@@ -57,9 +57,11 @@
       (vector))))
 
 (defun get-synonyms()
-  "Interactively get synonyms for symbol at point."
+  "Interactively get synonyms for symbol at active region or point."
   (interactive)
-  (let* ((bounds (bounds-of-thing-at-point 'symbol))
+  (let* ((bounds (if (use-region-p)
+                     (cons (region-beginning) (region-end))
+                     (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (replace-text (completing-read
                         (format "Select synonym for %S: " word)
