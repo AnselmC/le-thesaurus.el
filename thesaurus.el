@@ -1,8 +1,9 @@
-;;; package ---  Query thesaurus.com for synonyms of a given word.
+;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word.
 
 ;;; Copyright (C) 2021 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/thesaurus
 ;;; Version: 0.1
+;;; Package-Requires: ((request "0.3.2"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
