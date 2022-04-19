@@ -57,6 +57,7 @@
         (parse-synonyms-in-response response)
       (vector))))
 
+;;;###autoload
 (defun get-synonyms()
   "Interactively get synonyms for symbol at active region or point."
   (interactive)
