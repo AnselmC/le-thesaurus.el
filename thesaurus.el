@@ -1,9 +1,9 @@
-;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word.
+;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word
 
-;;; Copyright (C) 2021 by Anselm Coogan
+;;; Copyright (C) 2022 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/thesaurus
-;;; Version: 0.1
-;;; Package-Requires: ((request "0.3.2"))
+;;; Version: 0.2
+;;; Package-Requires: ((request "0.3.2") (emacs "24.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,10 +24,12 @@
 
 ;;; Code:
 
+;; -*- lexical-binding: t; -*-
+
 (require 'cl-lib)
 (require 'request)
 
-(defun parse-synonyms-in-response (payload)
+(defun thesaurus-parse-synonyms-in-response (payload)
   "Parse JSON PAYLOAD to extract synonyms from response."
   (let* ((data (assoc-default 'data payload))
          (definition-data (if data
@@ -46,7 +48,7 @@
                      (vector))))
     synonyms))
 
-(defun ask-thesaurus-for-synonyms (word)
+(defun thesaurus-ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms (possibly empty)."
   (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
          (request-string (concat thesaurus-base-url word))
@@ -54,10 +56,11 @@
                                             :parser 'json-read
                                             :sync t))))
     (if response
-        (parse-synonyms-in-response response)
+        (thesaurus-parse-synonyms-in-response response)
       (vector))))
 
-(defun get-synonyms()
+;;;###autoload
+(defun thesaurus-get-synonyms()
   "Interactively get synonyms for symbol at active region or point."
   (interactive)
   (let* ((bounds (if (use-region-p)
