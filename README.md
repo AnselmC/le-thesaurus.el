@@ -14,7 +14,7 @@ Clone this repo and add it to your load path:
 ```
 
 ## Usage
-Put your cursor on the word you'd like a synonym for and run `M-x get-synonyms`.
+Put your cursor on the word you'd like a synonym for and run `M-x thesaurus-get-synonyms`.
 Select a synonym from the completion buffer and hit `RET`.
 That's it.
 
