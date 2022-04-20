@@ -56,7 +56,7 @@
                                             :parser 'json-read
                                             :sync t))))
     (if response
-        (thesaurus/parse-synonyms-in-response response)
+        (thesaurus-parse-synonyms-in-response response)
       (vector))))
 
 ;;;###autoload
