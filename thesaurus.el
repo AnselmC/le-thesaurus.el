@@ -1,4 +1,4 @@
-;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word
+;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word -*- lexical-binding: t; -*-
 
 ;;; Copyright (C) 2022 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/thesaurus
@@ -23,8 +23,6 @@
 ;;; Uses the Elisp request library (https://github.com/tkf/emacs-request) and the thesaurus.com API to fetch synonyms
 
 ;;; Code:
-
-;; -*- lexical-binding: t; -*-
 
 (require 'cl-lib)
 (require 'request)
@@ -69,7 +67,7 @@
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (replace-text (completing-read
                         (format "Select synonym for %S: " word)
-                        (append (ask-thesaurus-for-synonyms word) '()))))
+                        (append (thesaurus-ask-thesaurus-for-synonyms word) '()))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
