@@ -1,4 +1,5 @@
 # Thesaurus.el
+[![Coverage Status](https://coveralls.io/repos/github/AnselmC/thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/thesaurus.el?branch=master)
 
 Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
 
