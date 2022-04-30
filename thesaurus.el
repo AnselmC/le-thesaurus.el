@@ -2,7 +2,7 @@
 
 ;;; Copyright (C) 2022 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/thesaurus
-;;; Version: 0.2
+;;; Version: 0.2.0
 ;;; Package-Requires: ((request "0.3.2") (emacs "24.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -47,7 +47,7 @@
     synonyms))
 
 (defun thesaurus-ask-thesaurus-for-synonyms (word)
-  "Ask thesaurus.com for synonyms for WORD and return vector of synonyms (possibly empty)."
+  "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
   (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
          (request-string (concat thesaurus-base-url word))
          (response (request-response-data (request request-string
