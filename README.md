@@ -1,7 +1,6 @@
 # Thesaurus.el
 
 Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
-Currently a proof-of-concept.
 
 <p align="center">
     <img src="thesaurus-example.gif"/>
@@ -19,3 +18,13 @@ Select a synonym from the completion buffer and hit `RET`.
 That's it.
 
 
+## Development
+Pull requests are welcome.
+
+### Tests
+Tests use the [buttercup framework](https://github.com/jorgenschaefer/emacs-buttercup).
+You can run tests via
+
+``` shell
+make test
+```
