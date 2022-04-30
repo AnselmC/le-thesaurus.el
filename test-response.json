@@ -1,0 +1,238 @@
+{
+	"data": {
+		"definitionData": {
+			"entry": "thesaurus",
+			"type": "normal",
+			"definitions": [{
+				"isInformal": "0",
+				"isVulgar": "0",
+				"definition": "dictionary of synonyms and antonyms",
+				"thesRid": "u27e59bea365df506.-410fe1c2.17951a1bf29.-1a52",
+				"pos": "noun",
+				"synonyms": [{
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "reference book",
+					"targetTerm": "reference book",
+					"targetSlug": "reference%20book"
+				}, {
+					"similarity": "50",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "glossary",
+					"targetTerm": "glossary",
+					"targetSlug": "glossary"
+				}, {
+					"similarity": "50",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "lexicon",
+					"targetTerm": "lexicon",
+					"targetSlug": "lexicon"
+				}, {
+					"similarity": "50",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "onomasticon",
+					"targetTerm": "onomasticon",
+					"targetSlug": "onomasticon"
+				}, {
+					"similarity": "50",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "terminology",
+					"targetTerm": "terminology",
+					"targetSlug": "terminology"
+				}, {
+					"similarity": "50",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "vocabulary",
+					"targetTerm": "vocabulary",
+					"targetSlug": "vocabulary"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "language reference book",
+					"targetTerm": "language reference book",
+					"targetSlug": "language%20reference%20book"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "sourcebook",
+					"targetTerm": "sourcebook",
+					"targetSlug": "sourcebook"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "storehouse of words",
+					"targetTerm": "storehouse of words",
+					"targetSlug": "storehouse%20of%20words"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "treasury of words",
+					"targetTerm": "treasury of words",
+					"targetSlug": "treasury%20of%20words"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "word list",
+					"targetTerm": "word list",
+					"targetSlug": "word%20list"
+				}],
+				"antonyms": [],
+				"note": null
+			}],
+			"slug": "thesaurus",
+			"rawSlug": "thesaurus",
+			"searchQueries": ["thesaurus", "thesaurus'", "thesaurus's", "thesauruses", "thesauruses'"]
+		},
+		"categoryId": "334",
+		"pronunciation": {
+			"ipa": "θɪˈsɔr əs ",
+			"spell": "thi-<span class=\"bold\">sawr</span>-<span class=\"italic\">uh</span>s ",
+			"audio": {
+				"audio/ogg": "https://static.sfdict.com/audio/lunawav/T02/T0226200.ogg",
+				"audio/mpeg": "https://static.sfdict.com/audio/T02/T0226200.mp3"
+			}
+		},
+		"confusables": [],
+		"supplementaryNotes": [],
+		"etymology": [],
+		"exampleSentences": [{
+			"source": {
+				"source_name": "Ars Technica",
+				"author": "Kiona N. Smith",
+				"url": "https://arstechnica.com/?p=1763016",
+				"title": "Earliest known burial in Africa is that of a small, fragile child",
+				"sourceName": "Ars Technica",
+				"publicationDate": "2021-05-06T16:20:33Z",
+				"publication_date": "2021-05-06T16:20:33Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36845518,
+			"sentence": "A thesaurus is a handy thing, but sometimes seemingly tiny differences in meaning can actually have a huge impact."
+		}, {
+			"source": {
+				"source_name": "Popular-Science",
+				"author": "Harry Guinness",
+				"url": "https://www.popsci.com/story/diy/online-tools-improve-writing/",
+				"title": "Become a better writer with these online tools",
+				"sourceName": "Popular-Science",
+				"publicationDate": "2020-10-20T12:00:00Z",
+				"publication_date": "2020-10-20T12:00:00Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36501114,
+			"sentence": "Instead, day after day I turn to all the wonderful dictionaries, thesauruses, and weird twists on them that are out there on the internet."
+		}, {
+			"sentence": "Hickes' transcript of the Calendar (Thesaurus, I, 203) shows an average of one error in every six lines.",
+			"profanity": 0,
+			"source": {
+				"title": "Beowulf",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/34117/34117-h/34117-h.htm",
+				"author": "R. W. Chambers",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "_6H6LXcBvqf01V-_XX6r"
+		}, {
+			"sentence": "Thus the ancient Runic inscriptions, as we gather from Hickes's Thesaurus, are in the form of a knot.",
+			"profanity": 0,
+			"source": {
+				"title": "The Medicine-Men of the Apache. (1892 N 09 / 1887-1888 (pages 443-604))",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/42616/42616-h/42616-h.htm",
+				"author": "John G. Bourke",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "p28cLncBoaa-DHVhcE4q"
+		}, {
+			"sentence": "The new thought of a treasury of merits (thesaurus meritorum) introduced further changes.",
+			"profanity": 0,
+			"source": {
+				"title": "Encyclopaedia Britannica, 11th Edition, Volume 17, Slice 2",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/43254/43254-h/43254-h.htm",
+				"author": "Various",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "9m8dLncBoaa-DHVha-Q7"
+		}, {
+			"sentence": "The work, however, on which his fame as a scholar is most surely based is the Thesaurus Graecae linguae.",
+			"profanity": 0,
+			"source": {
+				"title": "Encyclopaedia Britannica, 11th Edition, Volume 9, Slice 7",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/35398/35398-h/35398-h.htm",
+				"author": "Various",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "4HEhLncBoaa-DHVhg70N"
+		}, {
+			"sentence": "John Starke himself, with his Thesaurus of Horror, never penned anything so deliciously frightful.",
+			"profanity": 0,
+			"source": {
+				"title": "The History of Burke and Hare",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/41380/41380-h/41380-h.htm",
+				"author": "George Mac Gregor",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "E7chLncBvqf01V-_5zMY"
+		}, {
+			"sentence": "The Bibliotaph carried much accurate information in his head, but he never traveled without a thesaurus in his valise.",
+			"profanity": 0,
+			"source": {
+				"title": "The Bibliotaph",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/21272/21272-h/21272-h.htm",
+				"author": "Leon H. Vincent",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "o7kxLncBNntMT0NwZyc2"
+		}, {
+			"sentence": "None of the Genera contained in this work will be given in the Thesaurus until all the other Genera are exhausted.",
+			"profanity": 0,
+			"source": {
+				"title": "A Conchological Manual",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/43417/43417-h/43417-h.htm",
+				"author": "George Brettingham Sowerby",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "q78yLncBvqf01V-_RNQ0"
+		}, {
+			"sentence": "In the index of a Thesaurus he looks under denunciation, finding two numbers of paragraphs.",
+			"profanity": 0,
+			"source": {
+				"title": "Public Speaking",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/17318/17318-h/17318-h.htm",
+				"author": "Clarence Stratton",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "x7k0LncBNntMT0NwAVxa"
+		}],
+		"slugLuna": "thesaurus"
+	}
+}
