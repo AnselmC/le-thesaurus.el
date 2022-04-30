@@ -3,7 +3,7 @@
 ;;; Copyright (C) 2022 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/thesaurus
 ;;; Version: 0.2.0
-;;; Package-Requires: ((request "0.3.2") (emacs "24.3"))
+;;; Package-Requires: ((request "0.3.2") (emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

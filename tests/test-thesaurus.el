@@ -24,6 +24,11 @@
 
 ;;; Code:
 
+(when (require 'undercover nil t)
+  (undercover "*.el"
+	          (:report-format 'lcov)
+	          (:send-report nil)))
+
 (require 'buttercup)
 (require 'thesaurus)
 
@@ -44,7 +49,7 @@
     (let ((payload '((data . ((definitionData . ((definitions . [((synonyms . [((term . "hello")) ((term . "world"))]))]))))))))
       (expect (thesaurus-parse-synonyms-in-response payload) :to-equal '["hello" "world"])))
   (it "Returns the synonyms from full example json payload"
-    (let ((payload (json-read-file "test-response.json")))
+    (let ((payload (json-read-file "tests/data/test-response.json")))
       (expect (thesaurus-parse-synonyms-in-response payload) :to-equal '["reference book" "glossary" "lexicon" "onomasticon" "terminology" "vocabulary" "language reference book" "sourcebook" "storehouse of words" "treasury of words" "word list"]))))
 
 (describe "thesaurus correctly works with thesaurus.com."
