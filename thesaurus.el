@@ -27,7 +27,7 @@
 (require 'cl-lib)
 (require 'request)
 
-(defun thesaurus-parse-synonyms-in-response (payload)
+(defun thesaurus--parse-synonyms-in-response (payload)
   "Parse JSON PAYLOAD to extract synonyms from response."
   (let* ((data (assoc-default 'data payload))
          (definition-data (if data
@@ -46,16 +46,25 @@
                      (vector))))
     synonyms))
 
-(defun thesaurus-ask-thesaurus-for-synonyms (word)
+(defvar thesaurus--cache (make-hash-table :test 'equal))
+
+(defun thesaurus--ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
-  (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
-         (request-string (concat thesaurus-base-url word))
-         (response (request-response-data (request request-string
-                                            :parser 'json-read
-                                            :sync t))))
-    (if response
-        (thesaurus-parse-synonyms-in-response response)
-      (vector))))
+  (progn
+    (let ((cached-resp (gethash word thesaurus--cache)))
+      (if cached-resp
+          cached-resp
+        (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
+               (request-string (concat thesaurus-base-url word))
+               (response (request-response-data (request request-string
+                                                  :parser 'json-read
+                                                  :sync t))))
+          (if response
+              (let ((synonyms (thesaurus--parse-synonyms-in-response response)))
+                (progn 
+                (puthash word synonyms thesaurus--cache)
+                synonyms))
+          (vector)))))))
 
 ;;;###autoload
 (defun thesaurus-get-synonyms()
@@ -63,11 +72,11 @@
   (interactive)
   (let* ((bounds (if (use-region-p)
                      (cons (region-beginning) (region-end))
-                     (bounds-of-thing-at-point 'symbol)))
+                   (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (replace-text (completing-read
                         (format "Select synonym for %S: " word)
-                        (append (thesaurus-ask-thesaurus-for-synonyms word) '()))))
+                        (append (thesaurus--ask-thesaurus-for-synonyms word) '()))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
