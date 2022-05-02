@@ -1,7 +1,7 @@
 (source gnu)
 (source melpa-stable)
 
-(package-file "thesaurus.el")
+(package-file "le-thesaurus.el")
 
 (development
  (depends-on "undercover")

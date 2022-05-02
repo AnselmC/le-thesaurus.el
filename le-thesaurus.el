@@ -1,7 +1,7 @@
-;;; thesaurus.el ---  Query thesaurus.com for synonyms of a given word -*- lexical-binding: t; -*-
+;;; le-thesaurus.el ---  Query thesaurus.com for synonyms of a given word -*- lexical-binding: t; -*-
 
 ;;; Copyright (C) 2022 by Anselm Coogan
-;;; URL: https://github.com/AnselmC/thesaurus
+;;; URL: https://github.com/AnselmC/le-thesaurus
 ;;; Version: 0.2.0
 ;;; Package-Requires: ((request "0.3.2") (emacs "24.4"))
 
@@ -27,7 +27,7 @@
 (require 'cl-lib)
 (require 'request)
 
-(defun thesaurus--parse-synonyms-in-response (payload)
+(defun le-thesaurus--parse-synonyms-in-response (payload)
   "Parse JSON PAYLOAD to extract synonyms from response."
   (let* ((data (assoc-default 'data payload))
          (definition-data (if data
@@ -46,12 +46,12 @@
                      (vector))))
     synonyms))
 
-(defvar thesaurus--cache (make-hash-table :test 'equal))
+(defvar le-thesaurus--cache (make-hash-table :test 'equal))
 
-(defun thesaurus--ask-thesaurus-for-synonyms (word)
+(defun le-thesaurus--ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
   (progn
-    (let ((cached-resp (gethash word thesaurus--cache)))
+    (let ((cached-resp (gethash word le-thesaurus--cache)))
       (if cached-resp
           cached-resp
         (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
@@ -60,14 +60,14 @@
                                                   :parser 'json-read
                                                   :sync t))))
           (if response
-              (let ((synonyms (thesaurus--parse-synonyms-in-response response)))
+              (let ((synonyms (le-thesaurus--parse-synonyms-in-response response)))
                 (progn 
-                (puthash word synonyms thesaurus--cache)
+                (puthash word synonyms le-thesaurus--cache)
                 synonyms))
           (vector)))))))
 
 ;;;###autoload
-(defun thesaurus-get-synonyms()
+(defun le-thesaurus-get-synonyms()
   "Interactively get synonyms for symbol at active region or point."
   (interactive)
   (let* ((bounds (if (use-region-p)
@@ -76,10 +76,10 @@
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (replace-text (completing-read
                         (format "Select synonym for %S: " word)
-                        (append (thesaurus--ask-thesaurus-for-synonyms word) '()))))
+                        (append (le-thesaurus--ask-thesaurus-for-synonyms word) '()))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
 
-(provide 'thesaurus)
-;;; thesaurus.el ends here
+(provide 'le-thesaurus)
+;;; le-thesaurus.el ends here
