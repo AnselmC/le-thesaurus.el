@@ -1,5 +1,5 @@
-# Thesaurus.el
-[![Coverage Status](https://coveralls.io/repos/github/AnselmC/thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/thesaurus.el?branch=master)
+# le-thesaurus.el
+[![Coverage Status](https://coveralls.io/repos/github/AnselmC/le-thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/le-thesaurus.el?branch=master)
 
 Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
 
@@ -14,7 +14,7 @@ Clone this repo and add it to your load path:
 ```
 
 ## Usage
-Put your cursor on the word you'd like a synonym for and run `M-x thesaurus-get-synonyms`.
+Put your cursor on the word you'd like a synonym for and run `M-x le-thesaurus-get-synonyms`.
 Select a synonym from the completion buffer and hit `RET`.
 That's it.
 
