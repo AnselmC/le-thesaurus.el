@@ -35,16 +35,37 @@
                             '()))
          (definitions-list (if definition-data
                                (assoc-default 'definitions definition-data)
-                             '()))
-         (definitions (if definitions-list
-                          (aref definitions-list 0)
-                        '()))
-         (synonyms (if definitions
-                       (cl-map 'vector
-                               #'(lambda (e) (assoc-default 'term e))
-                               (assoc-default 'synonyms definitions))
-                     (vector))))
-    synonyms))
+                             '())))
+    (if definitions-list
+        (aref definitions-list 0)
+      '())))
+
+
+(defun le-thesaurus--get-completions (word-data)
+  (defun put-into-hash-table (e hash-t)
+    (let ((synonym (assoc-default 'term e)))
+      (puthash synonym e hash-t)))
+
+  (let* ((synonyms-data (assoc-default 'synonyms word-data))
+         (hash-table (make-hash-table :test 'equal)))
+    (progn
+      (mapc #'(lambda (e) (put-into-hash-table e hash-table)) synonyms-data)
+      hash-table)))
+
+
+
+
+(defun le-thesaurus--get-completions (synonyms)
+  (cl-map 'vector
+          #'(lambda (e) (assoc-default 'term e))
+          synonyms))
+
+(defun le-thesaurus--get-annotations (word)
+  (let ((metadata (gethash word minibuffer-completion-table)))
+    (concat "\tSimilarity: " (assoc-default 'similarity metadata)
+            "\tInformal: " (if (equal (assoc-default 'isInformal metadata) "0") "No" "Yes")
+            "\tVulgar: " (if (equal (assoc-default 'isVulgar metadata) "0") "No" "Yes"))))
+
 
 (defvar le-thesaurus--cache (make-hash-table :test 'equal))
 
@@ -61,10 +82,10 @@
                                                   :sync t))))
           (if response
               (let ((synonyms (le-thesaurus--parse-synonyms-in-response response)))
-                (progn 
-                (puthash word synonyms le-thesaurus--cache)
-                synonyms))
-          (vector)))))))
+                (progn
+                  (puthash word synonyms le-thesaurus--cache)
+                  synonyms))
+            (vector)))))))
 
 ;;;###autoload
 (defun le-thesaurus-get-synonyms()
@@ -74,9 +95,13 @@
                      (cons (region-beginning) (region-end))
                    (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
+         (results (le-thesaurus--ask-thesaurus-for-synonyms word))
+         (definition (assoc-default 'definition results))
+         (completions (le-thesaurus--get-completions results))
+         (completion-extra-properties '(:annotation-function le-thesaurus--get-annotations))
          (replace-text (completing-read
-                        (format "Select synonym for %S: " word)
-                        (append (le-thesaurus--ask-thesaurus-for-synonyms word) '()))))
+                        (format "Select synonym for %S: (%s)" word definition)
+                        completions)))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
