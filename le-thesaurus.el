@@ -27,6 +27,20 @@
 (require 'cl-lib)
 (require 'request)
 
+(defvar le-thesaurus--cache
+  (make-hash-table :test 'equal)
+  "Cache to store previous synonym request results.")
+
+(defun le-thesaurus--flatten-synonyms-for-definition (raw-response)
+  "Flatten the parsed json RAW-RESPONSE into a list of alists."
+  (let ((synonym-data (assoc-default 'synonyms raw-response))
+        (definition (assoc-default 'definition raw-response)))
+    (mapcar (lambda (syn) `((similarity . ,(assoc-default 'similarity syn))
+                            (vulgar . ,(not (equal (assoc-default 'isVulgar syn) "0")))
+                            (informal . ,(not (equal (assoc-default 'isInformal syn) "0")))
+                            (definition . ,definition)
+                            (term . ,(assoc-default 'term syn)))) synonym-data)))
+
 (defun le-thesaurus--parse-synonyms-in-response (payload)
   "Parse JSON PAYLOAD to extract synonyms from response."
   (let* ((data (assoc-default 'data payload))
@@ -36,38 +50,35 @@
          (definitions-list (if definition-data
                                (assoc-default 'definitions definition-data)
                              '())))
-    (if definitions-list
-        (aref definitions-list 0)
-      '())))
+    (apply #'append (mapcar (lambda (e) (le-thesaurus--flatten-synonyms-for-definition e)) definitions-list))))
 
 
-(defun le-thesaurus--get-completions (word-data)
-  (defun put-into-hash-table (e hash-t)
-    (let ((synonym (assoc-default 'term e)))
-      (puthash synonym e hash-t)))
-
-  (let* ((synonyms-data (assoc-default 'synonyms word-data))
-         (hash-table (make-hash-table :test 'equal)))
+(defun le-thesaurus--get-completions (synonyms-data)
+  "Create a hash-table containing the available completions from SYNONYMS-DATA."
+  (let ((hash-table (make-hash-table :test 'equal)))
     (progn
-      (mapc #'(lambda (e) (put-into-hash-table e hash-table)) synonyms-data)
+      (mapc #'(lambda (e) (puthash (assoc-default 'term e) e hash-table)) synonyms-data)
       hash-table)))
 
 
 
-
-(defun le-thesaurus--get-completions (synonyms)
-  (cl-map 'vector
-          #'(lambda (e) (assoc-default 'term e))
-          synonyms))
-
 (defun le-thesaurus--get-annotations (word)
-  (let ((metadata (gethash word minibuffer-completion-table)))
-    (concat "\tSimilarity: " (assoc-default 'similarity metadata)
-            "\tInformal: " (if (equal (assoc-default 'isInformal metadata) "0") "No" "Yes")
-            "\tVulgar: " (if (equal (assoc-default 'isVulgar metadata) "0") "No" "Yes"))))
+  "Get the annotations for a given WORD in the completion-table."
+  (let* ((metadata (gethash word minibuffer-completion-table))
+        (similarity (assoc-default 'similarity metadata))
+        (definition (assoc-default 'definition metadata))
+        (max-word-length 30)
+        (left-padding (- max-word-length (length word))))
+    (format
+     ;; dynamically determine left padding based on word length
+     (concat "%" (number-to-string left-padding) "s\t%3s\t%s%s\t%s\t%s")
+            "Sim: "
+            similarity
+            "Def: "
+            definition
+            (if (assoc-default 'informal metadata) "informal" "")
+            (if (assoc-default 'vulgar metadata) "vulgar" ""))))
 
-
-(defvar le-thesaurus--cache (make-hash-table :test 'equal))
 
 (defun le-thesaurus--ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
@@ -96,11 +107,10 @@
                    (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (results (le-thesaurus--ask-thesaurus-for-synonyms word))
-         (definition (assoc-default 'definition results))
          (completions (le-thesaurus--get-completions results))
          (completion-extra-properties '(:annotation-function le-thesaurus--get-annotations))
          (replace-text (completing-read
-                        (format "Select synonym for %S: (%s)" word definition)
+                        (format "Select synonym for %S: " word)
                         completions)))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
