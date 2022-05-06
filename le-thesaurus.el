@@ -52,19 +52,23 @@
                              '())))
     (apply #'append (mapcar (lambda (e) (le-thesaurus--flatten-synonyms-for-definition e)) definitions-list))))
 
-
 (defun le-thesaurus--get-completions (synonyms-data)
   "Create a hash-table containing the available completions from SYNONYMS-DATA."
+  (cl-sort (mapcar
+            (lambda (e) `(,(assoc-default 'term e) . ,e))
+            synonyms-data)
+           #'>
+           :key #'(lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
+
   (let ((hash-table (make-hash-table :test 'equal)))
     (progn
       (mapc #'(lambda (e) (puthash (assoc-default 'term e) e hash-table)) synonyms-data)
       hash-table)))
 
 
-
 (defun le-thesaurus--get-annotations (word)
   "Get the annotations for a given WORD in the completion-table."
-  (let* ((metadata (gethash word minibuffer-completion-table))
+  (let* ((metadata (assoc-default word minibuffer-completion-table))
         (similarity (assoc-default 'similarity metadata))
         (definition (assoc-default 'definition metadata))
         (max-word-length 30)
