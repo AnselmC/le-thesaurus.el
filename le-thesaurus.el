@@ -31,6 +31,7 @@
   (make-hash-table :test 'equal)
   "Cache to store previous synonym request results.")
 
+
 (defun le-thesaurus--flatten-synonyms-for-definition (raw-response)
   "Flatten the parsed json RAW-RESPONSE into a list of alists."
   (let ((synonym-data (assoc-default 'synonyms raw-response))
@@ -112,6 +113,11 @@ Synonyms are sorted by similarity."
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
+
+;;;###autoload
+(defun le-thesaurus-clear-cache ()
+    "Clear the cache for le-thesaurus."
+    (clrhash le-thesaurus--cache))
 
 (provide 'le-thesaurus)
 ;;; le-thesaurus.el ends here
