@@ -70,7 +70,7 @@ Synonyms are sorted by similarity."
          (left-padding (- max-word-length (length word))))
     (format
      ;; dynamically determine left padding based on word length
-     (concat "%" (number-to-string left-padding) "s\t%3s\t%s%s\t%s\t%s")
+     (concat "%" (number-to-string left-padding) "s%3s\t%s%s\t%s\t%s")
      "Sim: "
      similarity
      "Def: "
