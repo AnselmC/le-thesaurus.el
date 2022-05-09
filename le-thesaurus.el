@@ -117,6 +117,7 @@ Synonyms are sorted by similarity."
 ;;;###autoload
 (defun le-thesaurus-clear-cache ()
     "Clear the cache for le-thesaurus."
+    (interactive)
     (clrhash le-thesaurus--cache))
 
 (provide 'le-thesaurus)
