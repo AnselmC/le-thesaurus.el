@@ -59,7 +59,7 @@ Synonyms are sorted by similarity."
             (lambda (e) `(,(assoc-default 'term e) . ,e))
             synonyms-data)
            #'>
-           :key #'(lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
+           :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
 
 (defun le-thesaurus--get-annotations (word)
   "Get the annotations for a given WORD in the completion-table."
@@ -81,21 +81,19 @@ Synonyms are sorted by similarity."
 
 (defun le-thesaurus--ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
-  (progn
-    (let ((cached-resp (gethash word le-thesaurus--cache)))
-      (if cached-resp
-          cached-resp
-        (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
-               (request-string (concat thesaurus-base-url word))
-               (response (request-response-data (request request-string
-                                                  :parser 'json-read
-                                                  :sync t))))
-          (if response
-              (let ((synonyms (le-thesaurus--parse-synonyms-in-response response)))
-                (progn
-                  (puthash word synonyms le-thesaurus--cache)
-                  synonyms))
-            '()))))))
+  (let ((cached-resp (gethash word le-thesaurus--cache)))
+    (if cached-resp
+        cached-resp
+      (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
+             (request-string (concat thesaurus-base-url word))
+             (response (request-response-data (request request-string
+                                                :parser 'json-read
+                                                :sync t))))
+        (if response
+            (let ((synonyms (le-thesaurus--parse-synonyms-in-response response)))
+              (puthash word synonyms le-thesaurus--cache)
+              synonyms)
+          '())))))
 
 ;;;###autoload
 (defun le-thesaurus-get-synonyms()
