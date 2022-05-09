@@ -19,6 +19,10 @@ Install it via [use-package](https://github.com/jwiegley/use-package) or [straig
 ## Usage
 Put your cursor on the word you'd like a synonym for and run `M-x le-thesaurus-get-synonyms`.
 Pick a synonym from the completion buffer and hit `RET`.
+
+Responses from thesaurus.com are cached. 
+You can clear the cache with `le-thesaurus-clear-cache` if it should get too large.
+
 That's it.
 
 
