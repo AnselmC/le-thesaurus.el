@@ -9,9 +9,11 @@ Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
 </p>
 
 ## Installation
-Clone this repo and add it to your load path:
+le-thesaurus is available via [MELPA](https://melpa.org/).
+
+Install it via [use-package](https://github.com/jwiegley/use-package) or [straight](https://github.com/raxod502/straight.el)
 ```elisp
-(add-to-list 'load-path "/path/to/this/repo")
+(use-package le-thesaurus)
 ```
 
 ## Usage
