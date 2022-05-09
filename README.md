@@ -1,4 +1,5 @@
 # le-thesaurus.el
+[![MELPA](https://melpa.org/packages/le-thesaurus-badge.svg)](https://melpa.org/#/le-thesaurus)
 [![Coverage Status](https://coveralls.io/repos/github/AnselmC/le-thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/le-thesaurus.el?branch=master)
 
 Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
