@@ -2,7 +2,7 @@
 
 ;;; Copyright (C) 2022 by Anselm Coogan
 ;;; URL: https://github.com/AnselmC/le-thesaurus.el
-;;; Version: 0.2.0
+;;; Version: 0.3.0
 ;;; Package-Requires: ((request "0.3.2") (emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -32,18 +32,18 @@
   "Cache to store previous synonym request results.")
 
 
-(defun le-thesaurus--flatten-synonyms-for-definition (raw-response)
-  "Flatten the parsed json RAW-RESPONSE into a list of alists."
-  (let ((synonym-data (assoc-default 'synonyms raw-response))
+(defun le-thesaurus--flatten-data (raw-response type)
+  "Flatten the parsed json RAW-RESPONSE into a list of alists for a given TYPE."
+  (let ((type-data (assoc-default type raw-response))
         (definition (assoc-default 'definition raw-response)))
-    (mapcar (lambda (syn) `((similarity . ,(assoc-default 'similarity syn))
-                            (vulgar . ,(not (equal (assoc-default 'isVulgar syn) "0")))
-                            (informal . ,(not (equal (assoc-default 'isInformal syn) "0")))
-                            (definition . ,definition)
-                            (term . ,(assoc-default 'term syn)))) synonym-data)))
+    (mapcar (lambda (metadata) `((similarity . ,(assoc-default 'similarity metadata))
+                                 (vulgar . ,(not (equal (assoc-default 'isVulgar metadata) "0")))
+                                 (informal . ,(not (equal (assoc-default 'isInformal metadata) "0")))
+                                 (definition . ,definition)
+                                 (term . ,(assoc-default 'term metadata)))) type-data)))
 
-(defun le-thesaurus--parse-synonyms-in-response (payload)
-  "Parse JSON PAYLOAD to extract synonyms from response."
+(defun le-thesaurus--parse-data-in-response (payload type)
+  "Parse JSON PAYLOAD to extract TYPE from response."
   (let* ((data (assoc-default 'data payload))
          (definition-data (if data
                               (assoc-default 'definitionData data)
@@ -51,10 +51,37 @@
          (definitions-list (if definition-data
                                (assoc-default 'definitions definition-data)
                              '())))
-    (apply #'append (mapcar (lambda (e) (le-thesaurus--flatten-synonyms-for-definition e)) definitions-list))))
+    (apply #'append (mapcar (lambda (e) (le-thesaurus--flatten-data e type)) definitions-list))))
 
-(defun le-thesaurus--ask-thesaurus-for-synonyms (word)
-  "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
+(defun le-thesaurus--get-completions (word-data)
+  "Create an alist from WORD-DATA to be used for completions.
+Synonyms are sorted by similarity."
+  (cl-sort (mapcar
+            (lambda (e) `(,(assoc-default 'term e) . ,e))
+            word-data)
+           #'>
+           :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
+
+(defun le-thesaurus--get-annotations (word)
+  "Get the annotations for a given WORD in the completion-table."
+  (let* ((metadata (assoc-default word minibuffer-completion-table))
+         (similarity (assoc-default 'similarity metadata))
+         (definition (assoc-default 'definition metadata))
+         (max-word-length 30)
+         (left-padding (- max-word-length (length word))))
+    (format
+     ;; dynamically determine left padding based on word length
+     (concat "%" (number-to-string left-padding) "s%3s\t%s%s\t%s\t%s")
+     "Sim: "
+     similarity
+     "Def: "
+     definition
+     (if (assoc-default 'informal metadata) "informal" "")
+     (if (assoc-default 'vulgar metadata) "vulgar" ""))))
+
+
+(defun le-thesaurus--ask-thesaurus-for-word (word type)
+  "Ask thesaurus.com for TYPE data on WORD and return response."
   (let ((cached-resp (gethash word le-thesaurus--cache)))
     (if cached-resp
         cached-resp
@@ -64,9 +91,9 @@
                                                 :parser 'json-read
                                                 :sync t))))
         (if response
-            (let ((synonyms (le-thesaurus--parse-synonyms-in-response response)))
-              (puthash word synonyms le-thesaurus--cache)
-              synonyms)
+            (progn
+              (puthash word response le-thesaurus--cache)
+              (le-thesaurus--parse-data-in-response response type))
           '())))))
 
 (defun le-thesaurus--get-completions (synonyms-data)
@@ -120,32 +147,42 @@ Synonyms are sorted by similarity."
        (all-completions str completions pred)))))
 
 (defun le-thesaurus--get-word-case (word)
-  "Returns whether WORD is upcase or capitalized, or defaults to downcase."
+  "Returns whether WORD is 'upcase or 'capitalized, or defaults to 'downcase."
   (cond ((equal (upcase word) word) 'upcase)
-	((equal (capitalize word) word) 'capitalized)
-	(t 'downcase)))
+	    ((equal (capitalize word) word) 'capitalized)
+	    (t 'downcase)))
 
-;;;###autoload
-(defun le-thesaurus-get-synonyms()
-  "Interactively get synonyms for symbol at active region or point."
+(defun le-thesaurus--completing-read (type)
+  "Interactively get TYPE for symbol at active region or point."
   (interactive)
   (let* ((bounds (if (use-region-p)
                      (cons (region-beginning) (region-end))
                    (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
-	 (word-case (le-thesaurus--get-word-case word))
-         (results (le-thesaurus--ask-thesaurus-for-synonyms word))
+	     (word-case (le-thesaurus--get-word-case word))
+         (results (le-thesaurus--ask-thesaurus-for-word word type))
          (completions (le-thesaurus--get-completions results))
          (replace-text (completing-read
-                        (format "Select synonym for %S: " word)
+                        (format "Select %s for %S: " type word)
                         (le-thesaurus--completing-read-collection-fn completions))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert (cond ((equal word-case 'upcase) (upcase replace-text))
-		    ((equal word-case 'capitalized) (capitalize replace-text))
-		    (t replace-text))))))
+		            ((equal word-case 'capitalized) (capitalize replace-text))
+		            (t replace-text))))))
 
 
+;;;###autoload
+(defun le-thesaurus-get-synonyms ()
+  "Interactively get synonyms for symbol at active region or point."
+  (interactive)
+  (le-thesaurus--completing-read 'synonyms))
+
+;;;###autoload
+(defun le-thesaurus-get-antonyms()
+  "Interactively get antonyms for symbol at active region or point."
+  (interactive)
+  (le-thesaurus--completing-read 'antonyms))
 
 ;;;###autoload
 (defun le-thesaurus-clear-cache ()
