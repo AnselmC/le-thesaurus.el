@@ -109,14 +109,14 @@ Synonyms are sorted by similarity."
 (defun le-thesaurus--completing-read-collection-fn (completions)
   "Get fun initialized with COMPLETIONS for collection arg to 'completing-read'."
   (lambda (str pred flag)
-    (pcase flag
+    (cl-case flag
       ('metadata
        `(metadata
          (annotation-function . ,(le-thesaurus--get-annotations completions))
          (group-function . ,(le-thesaurus--get-group completions))
          (display-sort-function . ,#'identity) ;; completions are already sorted
          ))
-      (_
+      (t
        (all-completions str completions pred)))))
 
 ;;;###autoload
