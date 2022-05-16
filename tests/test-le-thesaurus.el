@@ -112,9 +112,15 @@
                           ("language reference book" (similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "language reference book"))))))
           (it "Creates annotations containing definitions and similarities of each synonym"
               (let* ((word "word list")
-                     (minibuffer-completion-table (le-thesaurus--get-completions synonyms))
-                     (annotations (le-thesaurus--get-annotations word)))
-                (expect annotations :to-equal (format "\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\sSim:  20\tDef: dictionary of synonyms and antonyms\t\t")))))
+                     (annotation (funcall (le-thesaurus--get-annotations (le-thesaurus--get-completions synonyms)) word)))
+                (expect annotation :to-equal (format "\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\sSim:  20\tDef: dictionary of synonyms and antonyms\t\t"))))
+          (it "Correctly uses the definition for the group of a synonym"
+              (let* ((completions (le-thesaurus--get-completions synonyms))
+                     (word "reference book")
+                     (group (funcall (le-thesaurus--get-group completions) word '()))
+                     (completion (funcall (le-thesaurus--get-group completions) word t)))
+                (expect group :to-equal "dictionary of synonyms and antonyms")
+                (expect completion :to-equal word))))
 
 
 (provide 'test-le-thesaurus)

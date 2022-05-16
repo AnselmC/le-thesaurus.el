@@ -53,33 +53,6 @@
                              '())))
     (apply #'append (mapcar (lambda (e) (le-thesaurus--flatten-synonyms-for-definition e)) definitions-list))))
 
-(defun le-thesaurus--get-completions (synonyms-data)
-  "Create an alist from SYNONYMS-DATA to be used for completions.
-Synonyms are sorted by similarity."
-  (cl-sort (mapcar
-            (lambda (e) `(,(assoc-default 'term e) . ,e))
-            synonyms-data)
-           #'>
-           :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
-
-(defun le-thesaurus--get-annotations (word)
-  "Get the annotations for a given WORD in the completion-table."
-  (let* ((metadata (assoc-default word minibuffer-completion-table))
-         (similarity (assoc-default 'similarity metadata))
-         (definition (assoc-default 'definition metadata))
-         (max-word-length 30)
-         (left-padding (- max-word-length (length word))))
-    (format
-     ;; dynamically determine left padding based on word length
-     (concat "%" (number-to-string left-padding) "s%3s\t%s%s\t%s\t%s")
-     "Sim: "
-     similarity
-     "Def: "
-     definition
-     (if (assoc-default 'informal metadata) "informal" "")
-     (if (assoc-default 'vulgar metadata) "vulgar" ""))))
-
-
 (defun le-thesaurus--ask-thesaurus-for-synonyms (word)
   "Ask thesaurus.com for synonyms for WORD and return vector of synonyms."
   (let ((cached-resp (gethash word le-thesaurus--cache)))
@@ -96,6 +69,56 @@ Synonyms are sorted by similarity."
               synonyms)
           '())))))
 
+(defun le-thesaurus--get-completions (synonyms-data)
+  "Create an alist from SYNONYMS-DATA to be used for completions.
+Synonyms are sorted by similarity."
+  (cl-sort (mapcar
+            (lambda (e) `(,(assoc-default 'term e) . ,e))
+            synonyms-data)
+           #'>
+           :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
+
+(defun le-thesaurus--get-annotations (completions)
+  "Get function initalized with COMPLETIONS to annotate a given word."
+  (lambda (word)
+    (let* ((metadata (assoc-default word completions))
+           (similarity (assoc-default 'similarity metadata))
+           (definition (assoc-default 'definition metadata))
+           (max-word-length 30)
+           (left-padding (- max-word-length (length word))))
+      (format
+       ;; dynamically determine left padding based on word length
+       (concat "%" (number-to-string left-padding) "s%3s\t%s%s\t%s\t%s")
+       "Sim: "
+       similarity
+       "Def: "
+       definition
+       (if (assoc-default 'informal metadata) "informal" "")
+       (if (assoc-default 'vulgar metadata) "vulgar" "")))))
+
+
+
+(defun le-thesaurus--get-group (completions)
+  "Get fun initialized with COMPLETIONS to get group of a given completion."
+  (lambda (completion transform)
+    (if transform
+        completion
+      (assoc-default 'definition (assoc-default completion completions)))))
+
+
+(defun le-thesaurus--completing-read-collection-fn (completions)
+  "Get fun initialized with COMPLETIONS for collection arg to 'completing-read'."
+  (lambda (str pred flag)
+    (cl-case flag
+      ('metadata
+       `(metadata
+         (annotation-function . ,(le-thesaurus--get-annotations completions))
+         (group-function . ,(le-thesaurus--get-group completions))
+         (display-sort-function . ,#'identity) ;; completions are already sorted
+         ))
+      (t
+       (all-completions str completions pred)))))
+
 ;;;###autoload
 (defun le-thesaurus-get-synonyms()
   "Interactively get synonyms for symbol at active region or point."
@@ -106,19 +129,20 @@ Synonyms are sorted by similarity."
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
          (results (le-thesaurus--ask-thesaurus-for-synonyms word))
          (completions (le-thesaurus--get-completions results))
-         (completion-extra-properties '(:annotation-function le-thesaurus--get-annotations))
          (replace-text (completing-read
                         (format "Select synonym for %S: " word)
-                        completions)))
+                        (le-thesaurus--completing-read-collection-fn completions))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
       (insert replace-text))))
 
+
+
 ;;;###autoload
 (defun le-thesaurus-clear-cache ()
-    "Clear the cache for le-thesaurus."
-    (interactive)
-    (clrhash le-thesaurus--cache))
+  "Clear the cache for le-thesaurus."
+  (interactive)
+  (clrhash le-thesaurus--cache))
 
 (provide 'le-thesaurus)
 ;;; le-thesaurus.el ends here
