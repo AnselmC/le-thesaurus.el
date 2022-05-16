@@ -113,7 +113,10 @@
           (it "Creates annotations containing definitions and similarities of each synonym"
               (let* ((word "word list")
                      (annotation (funcall (le-thesaurus--get-annotations (le-thesaurus--get-completions synonyms)) word)))
-                (expect annotation :to-equal (format "\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\sSim:  20\tDef: dictionary of synonyms and antonyms\t\t")))))
+                (expect annotation :to-equal (format "\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\sSim:  20\tDef: dictionary of synonyms and antonyms\t\t"))))
+          (it "Correctly uses the definition for the group of a synonym"
+              (let ((group (funcall (le-thesaurus--get-group (let-thesaurus--get-completions synonyms)) "reference book")))
+                (expect group :to-equal "dictionary of synonyms and antonyms"))))
 
 
 (provide 'test-le-thesaurus)
