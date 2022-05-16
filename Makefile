@@ -10,8 +10,7 @@ cask: $(CASK_DIR)
 
 .PHONY: lint
 lint: cask
-	cask exec emacs --quick --batch --directory . -f checkdoc \
-	--eval "(require 'package-lint)" -f package-lint-batch-and-exit
+	cask exec emacs --quick --batch --directory . -f checkdoc --eval "(require 'package-lint)" -f package-lint-batch-and-exit
 
 .PHONY: compile
 compile: cask
