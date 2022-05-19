@@ -1,7 +1,7 @@
 ;;; le-thesaurus.el ---  Query thesaurus.com for synonyms of a given word -*- lexical-binding: t; -*-
 
 ;;; Copyright (C) 2022 by Anselm Coogan
-;;; URL: https://github.com/AnselmC/le-thesaurus
+;;; URL: https://github.com/AnselmC/le-thesaurus.el
 ;;; Version: 0.2.0
 ;;; Package-Requires: ((request "0.3.2") (emacs "24.4"))
 
