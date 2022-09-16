@@ -119,6 +119,12 @@ Synonyms are sorted by similarity."
       (t
        (all-completions str completions pred)))))
 
+(defun le-thesaurus--get-word-case (word)
+  "Returns whether WORD is upcase or capitalized, or defaults to downcase."
+  (cond ((equal (upcase word) word) 'upcase)
+	((equal (capitalize word) word) 'capitalized)
+	(t 'downcase)))
+
 ;;;###autoload
 (defun le-thesaurus-get-synonyms()
   "Interactively get synonyms for symbol at active region or point."
@@ -127,6 +133,7 @@ Synonyms are sorted by similarity."
                      (cons (region-beginning) (region-end))
                    (bounds-of-thing-at-point 'symbol)))
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
+	 (word-case (le-thesaurus--get-word-case word))
          (results (le-thesaurus--ask-thesaurus-for-synonyms word))
          (completions (le-thesaurus--get-completions results))
          (replace-text (completing-read
@@ -134,7 +141,11 @@ Synonyms are sorted by similarity."
                         (le-thesaurus--completing-read-collection-fn completions))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
-      (insert replace-text))))
+      (insert (if (equal word-case 'upcase)
+		  (upcase replace-text)
+		(if (equal word-case 'capitalized)
+		    (capitalize replace-text)
+		  replace-text))))))
 
 
 
