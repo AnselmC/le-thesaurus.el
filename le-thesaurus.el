@@ -107,7 +107,7 @@ Synonyms are sorted by similarity."
 
 
 (defun le-thesaurus--completing-read-collection-fn (completions)
-  "Get fun initialized with COMPLETIONS for collection arg to 'completing-read'."
+  "Get fun initialized with COMPLETIONS for collection arg to `completing-read'."
   (lambda (str pred flag)
     (cl-case flag
       ('metadata
