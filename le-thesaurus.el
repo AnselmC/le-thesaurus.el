@@ -141,11 +141,9 @@ Synonyms are sorted by similarity."
                         (le-thesaurus--completing-read-collection-fn completions))))
     (when bounds
       (delete-region (car bounds) (cdr bounds))
-      (insert (if (equal word-case 'upcase)
-		  (upcase replace-text)
-		(if (equal word-case 'capitalized)
-		    (capitalize replace-text)
-		  replace-text))))))
+      (insert (cond ((equal word-case 'upcase) (upcase replace-text))
+		    ((equal word-case 'capitalized) (capitalize replace-text))
+		    (t replace-text))))))
 
 
 
