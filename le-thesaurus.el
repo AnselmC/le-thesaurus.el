@@ -55,7 +55,7 @@
 
 (defun le-thesaurus--get-completions (word-data)
   "Create an alist from WORD-DATA to be used for completions.
-Synonyms are sorted by similarity."
+Words are sorted by similarity."
   (cl-sort (mapcar
             (lambda (e) `(,(assoc-default 'term e) . ,e))
             word-data)
@@ -147,7 +147,7 @@ Synonyms are sorted by similarity."
        (all-completions str completions pred)))))
 
 (defun le-thesaurus--get-word-case (word)
-  "Returns whether WORD is 'upcase or 'capitalized, or defaults to 'downcase."
+  "Return whether WORD is 'upcase or 'capitalized, or defaults to 'downcase."
   (cond ((equal (upcase word) word) 'upcase)
 	    ((equal (capitalize word) word) 'capitalized)
 	    (t 'downcase)))
@@ -161,15 +161,17 @@ Synonyms are sorted by similarity."
          (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
 	     (word-case (le-thesaurus--get-word-case word))
          (results (le-thesaurus--ask-thesaurus-for-word word type))
-         (completions (le-thesaurus--get-completions results))
-         (replace-text (completing-read
-                        (format "Select %s for %S: " type word)
-                        (le-thesaurus--completing-read-collection-fn completions))))
-    (when bounds
-      (delete-region (car bounds) (cdr bounds))
-      (insert (cond ((equal word-case 'upcase) (upcase replace-text))
-		            ((equal word-case 'capitalized) (capitalize replace-text))
-		            (t replace-text))))))
+         (completions (le-thesaurus--get-completions results)))
+    (if completions
+        (let ((replace-text (completing-read
+                             (format "Select %s for %S: " type word)
+                             (le-thesaurus--completing-read-collection-fn completions))))
+          (when bounds
+            (delete-region (car bounds) (cdr bounds))
+            (insert (cond ((equal word-case 'upcase) (upcase replace-text))
+		                  ((equal word-case 'capitalized) (capitalize replace-text))
+		                  (t replace-text)))))
+      (message (format "No %s for %S!" type word)))))
 
 
 ;;;###autoload
