@@ -147,7 +147,7 @@ Synonyms are sorted by similarity."
        (all-completions str completions pred)))))
 
 (defun le-thesaurus--get-word-case (word)
-  "Return whether WORD is 'upcase or 'capitalized, or defaults to 'downcase."
+  "Return whether WORD is `upcase or `capitalized, or defaults to `downcase."
   (cond ((equal (upcase word) word) 'upcase)
 	    ((equal (capitalize word) word) 'capitalized)
 	    (t 'downcase)))
