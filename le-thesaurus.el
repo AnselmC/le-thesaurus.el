@@ -62,22 +62,6 @@ Words are sorted by similarity."
            #'>
            :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
 
-(defun le-thesaurus--get-annotations (word)
-  "Get the annotations for a given WORD in the completion-table."
-  (let* ((metadata (assoc-default word minibuffer-completion-table))
-         (similarity (assoc-default 'similarity metadata))
-         (definition (assoc-default 'definition metadata))
-         (max-word-length 30)
-         (left-padding (- max-word-length (length word))))
-    (format
-     ;; dynamically determine left padding based on word length
-     (concat "%" (number-to-string left-padding) "s%3s\t%s%s\t%s\t%s")
-     "Sim: "
-     similarity
-     "Def: "
-     definition
-     (if (assoc-default 'informal metadata) "informal" "")
-     (if (assoc-default 'vulgar metadata) "vulgar" ""))))
 
 
 (defun le-thesaurus--ask-thesaurus-for-word (word type)
@@ -96,14 +80,6 @@ Words are sorted by similarity."
               (le-thesaurus--parse-data-in-response response type))
           '())))))
 
-(defun le-thesaurus--get-completions (synonyms-data)
-  "Create an alist from SYNONYMS-DATA to be used for completions.
-Synonyms are sorted by similarity."
-  (cl-sort (mapcar
-            (lambda (e) `(,(assoc-default 'term e) . ,e))
-            synonyms-data)
-           #'>
-           :key (lambda (x) (string-to-number (assoc-default 'similarity (cdr x))))))
 
 (defun le-thesaurus--get-annotations (completions)
   "Get function initalized with COMPLETIONS to annotate a given word."
