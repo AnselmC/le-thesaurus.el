@@ -84,7 +84,7 @@ Words are sorted by similarity."
   "Ask thesaurus.com for TYPE data on WORD and return response."
   (let ((cached-resp (gethash word le-thesaurus--cache)))
     (if cached-resp
-        cached-resp
+        (le-thesaurus--parse-data-in-response cached-resp type)
       (let* ((thesaurus-base-url "https://tuna.thesaurus.com/pageData/")
              (request-string (concat thesaurus-base-url word))
              (response (request-response-data (request request-string
