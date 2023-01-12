@@ -158,7 +158,7 @@ Synonyms are sorted by similarity."
   (let* ((bounds (if (use-region-p)
                      (cons (region-beginning) (region-end))
                    (bounds-of-thing-at-point 'symbol)))
-         (word (buffer-substring-no-properties (car bounds) (cdr bounds)))
+         (word (replace-regexp-in-string "[^[:alpha:] ]" "" (buffer-substring-no-properties (car bounds) (cdr bounds))))
 	     (word-case (le-thesaurus--get-word-case word))
          (results (le-thesaurus--ask-thesaurus-for-word word type))
          (completions (le-thesaurus--get-completions results)))
