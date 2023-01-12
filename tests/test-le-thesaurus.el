@@ -86,14 +86,14 @@
               (let ((payload (json-read-file "tests/data/test-response-antonyms.json")))
                 (expect (le-thesaurus--parse-data-in-response payload 'antonyms) :to-equal
                         '(((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "advantageous"))
-                        '(((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "beautiful"))
-                          ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "comforting"))))))))
+                          ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "beautiful"))
+                          ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "comforting")))))))
 
 (describe "le-thesaurus correctly works with thesaurus.com."
           (it "Returns the expected list of synonyms for 'thesaurus'"
-              (defvar auto-revert-notify-watch-descriptor-hash-list nil);; there's a bug in request it seem s.t. I need to define this var
+              (defvar auto-revert-notify-watch-descriptor-hash-list nil);; there's a bug in request it seems s.t. I need to define this var
               (let ((word "thesaurus"))
-                (expect (le-thesaurus--ask-thesaurus-for-synonyms word) :to-equal
+                (expect (le-thesaurus--ask-thesaurus-for-word word 'synonyms) :to-equal
                         '(((similarity . "100") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "reference book"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "glossary"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "lexicon"))
@@ -107,12 +107,12 @@
                           ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "word list"))))))
           (it "Sets the cache when a word is requested"
               (let* ((word "dictionary")
-                     (synonyms (le-thesaurus--ask-thesaurus-for-synonyms word)))
-                (expect (gethash word le-thesaurus--cache) :to-be synonyms)))
+                     (synonyms (le-thesaurus--ask-thesaurus-for-word word 'synonyms)))
+                (expect (le-thesaurus--parse-data-in-response (gethash word le-thesaurus--cache) 'synonyms) :to-equal synonyms)))
           (it "Uses the cache when the same word is requested twice"
               (let* ((word "ball")
-                     (first-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-synonyms word)))
-                     (second-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-synonyms word))))
+                     (first-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-word word 'synonyms)))
+                     (second-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-word word 'synonyms))))
                 ;; using factor of 5 to make sure that performance increase isn't random variation in network response time
                 (expect first-run-secs :to-be-greater-than (* 5 second-run-secs)))))
 
