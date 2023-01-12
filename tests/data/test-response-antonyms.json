@@ -1,0 +1,455 @@
+{
+	"data": {
+		"definitionData": {
+			"entry": "dreadful",
+			"type": "normal",
+			"definitions": [{
+				"isInformal": "0",
+				"isVulgar": "0",
+				"definition": "horrible, frightening",
+				"thesRid": "u27e59bea365df506.-410fe1c2.17951aecf67.-43d9",
+				"pos": "adjective",
+				"synonyms": [{
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "abominable",
+					"targetTerm": "abominable",
+					"targetSlug": "abominable"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "alarming",
+					"targetTerm": "alarming",
+					"targetSlug": "alarming"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "appalling",
+					"targetTerm": "appalling",
+					"targetSlug": "appalling"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "atrocious",
+					"targetTerm": "atrocious",
+					"targetSlug": "atrocious"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "awful",
+					"targetTerm": "awful",
+					"targetSlug": "awful"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "bad",
+					"targetTerm": "bad",
+					"targetSlug": "bad"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "dire",
+					"targetTerm": "dire",
+					"targetSlug": "dire"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "distressing",
+					"targetTerm": "distressing",
+					"targetSlug": "distressing"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "frightful",
+					"targetTerm": "frightful",
+					"targetSlug": "frightful"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "ghastly",
+					"targetTerm": "ghastly",
+					"targetSlug": "ghastly"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "grievous",
+					"targetTerm": "grievous",
+					"targetSlug": "grievous"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "grim",
+					"targetTerm": "grim",
+					"targetSlug": "grim"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "hideous",
+					"targetTerm": "hideous",
+					"targetSlug": "hideous"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "horrendous",
+					"targetTerm": "horrendous",
+					"targetSlug": "horrendous"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "horrific",
+					"targetTerm": "horrific",
+					"targetSlug": "horrific"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "lousy",
+					"targetTerm": "lousy",
+					"targetSlug": "lousy"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "monstrous",
+					"targetTerm": "monstrous",
+					"targetSlug": "monstrous"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "rotten",
+					"targetTerm": "rotten",
+					"targetSlug": "rotten"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "shameful",
+					"targetTerm": "shameful",
+					"targetSlug": "shameful"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "shocking",
+					"targetTerm": "shocking",
+					"targetSlug": "shocking"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "terrible",
+					"targetTerm": "terrible",
+					"targetSlug": "terrible"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "terrific",
+					"targetTerm": "terrific",
+					"targetSlug": "terrific"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "tragic",
+					"targetTerm": "tragic",
+					"targetSlug": "tragic"
+				}, {
+					"similarity": "100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "tremendous",
+					"targetTerm": "tremendous",
+					"targetSlug": "tremendous"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "beastly",
+					"targetTerm": "beastly",
+					"targetSlug": "beastly"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "creepy",
+					"targetTerm": "creepy",
+					"targetSlug": "creepy"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "fearful",
+					"targetTerm": "fearful",
+					"targetSlug": "fearful"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "formidable",
+					"targetTerm": "formidable",
+					"targetSlug": "formidable"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "frozen",
+					"targetTerm": "frozen",
+					"targetSlug": "frozen"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "godawful",
+					"targetTerm": "godawful",
+					"targetSlug": "godawful"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "grody",
+					"targetTerm": "grody",
+					"targetSlug": "grody"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "gross",
+					"targetTerm": "gross",
+					"targetSlug": "gross"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "icky",
+					"targetTerm": "icky",
+					"targetSlug": "icky"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "mean",
+					"targetTerm": "mean",
+					"targetSlug": "mean"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "shuddersome",
+					"targetTerm": "shuddersome",
+					"targetSlug": "shuddersome"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "spooky",
+					"targetTerm": "spooky",
+					"targetSlug": "spooky"
+				}, {
+					"similarity": "10",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "wicked",
+					"targetTerm": "wicked",
+					"targetSlug": "wicked"
+				}],
+				"antonyms": [{
+					"similarity": "-100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "advantageous",
+					"targetTerm": "advantageous",
+					"targetSlug": "advantageous"
+				}, {
+					"similarity": "-100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "beautiful",
+					"targetTerm": "beautiful",
+					"targetSlug": "beautiful"
+				}, {
+					"similarity": "-100",
+					"isInformal": "0",
+					"isVulgar": "0",
+					"term": "comforting",
+					"targetTerm": "comforting",
+					"targetSlug": "comforting"
+				}],
+				"note": null
+			}],
+			"slug": "dreadful",
+			"rawSlug": "dreadful",
+			"searchQueries": ["dreadful", "more dreadful", "most dreadful", "more-dreadful", "moredreadful", "most-dreadful", "mostdreadful"]
+		},
+		"categoryId": "275",
+		"inflections": [{
+			"displayForm": "dreadfulness",
+			"slug": "dreadfulness"
+		}],
+		"pronunciation": {
+			"ipa": "ˈdrɛd fəl ",
+			"spell": "<span class=\"bold\">dred</span>-f<span class=\"italic\">uh</span>l ",
+			"audio": {
+				"audio/ogg": "https://static.sfdict.com/audio/lunawav/D05/D0523600.ogg",
+				"audio/mpeg": "https://static.sfdict.com/audio/D05/D0523600.mp3"
+			}
+		},
+		"confusables": [],
+		"supplementaryNotes": [],
+		"etymology": [],
+		"exampleSentences": [{
+			"source": {
+				"source_name": "Washington Post",
+				"author": "Matt Brooks",
+				"url": "https://www.washingtonpost.com/food/2020/12/04/best-chocolate-chip-cookie-brands/",
+				"title": "Who makes the best chocolate chip cookie? We tasted 14 top brands and ranked them.",
+				"sourceName": "Washington Post",
+				"publicationDate": "2020-12-04T14:00:40Z",
+				"publication_date": "2020-12-04T14:00:40Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36580565,
+			"sentence": "I guess the reason it needs a lot of chocolate is the actual cookie is rather dreadful."
+		}, {
+			"source": {
+				"source_name": "Popular-Science",
+				"author": "Sandra Gutierrez G.",
+				"url": "https://www.popsci.com/story/diy/stop-mask-fogging-glasses-tips/",
+				"title": "The best ways to stop a mask from fogging up your glasses, ranked",
+				"sourceName": "Popular-Science",
+				"publicationDate": "2020-11-18T13:00:00Z",
+				"publication_date": "2020-11-18T13:00:00Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36547625,
+			"sentence": "As a glasses-noob suffering from the dreadful fog myself, I turned to the internet for answers."
+		}, {
+			"source": {
+				"source_name": "Vox",
+				"author": "Constance Grady",
+				"url": "https://www.vox.com/culture/21517606/mexican-gothic-silvia-moreno-garcia-post-colonial-empire-vox-book-club",
+				"title": "Gothic novels are obsessed with borders. Mexican Gothic takes full advantage.",
+				"sourceName": "Vox",
+				"publicationDate": "2020-10-16T20:00:00Z",
+				"publication_date": "2020-10-16T20:00:00Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36487126,
+			"sentence": "She is a threat to its isolation, its purity, and its unknowable and dreadful secrets."
+		}, {
+			"source": {
+				"source_name": "Washington Blade",
+				"author": "Patrick Folliard",
+				"url": "https://www.washingtonblade.com/2020/08/20/hammerly-isnt-ready-to-give-up-on-theater/",
+				"title": "Hammerly isn’t ready to give up on theater",
+				"sourceName": "Washington Blade",
+				"publicationDate": "2020-08-20T20:12:54Z",
+				"publication_date": "2020-08-20T20:12:54Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36407773,
+			"sentence": "If there were to be any sort of silver lining to dreadful circumstances, this was it."
+		}, {
+			"source": {
+				"source_name": "FiveThirtyEight",
+				"author": "Jared Dubin",
+				"url": "https://fivethirtyeight.com/features/the-raptors-defense-is-almost-never-the-same-but-its-always-really-good/",
+				"title": "The Raptors’ Defense Is Almost Never The Same, But It’s Always Really Good",
+				"sourceName": "FiveThirtyEight",
+				"publicationDate": "2020-08-17T14:30:39Z",
+				"publication_date": "2020-08-17T14:30:39Z",
+				"type": "const",
+				"abbreviation": "nlp"
+			},
+			"profanity": 0,
+			"id": 36367651,
+			"sentence": "Toronto’s offense checks in just outside the top 10 for the full season, and it’s been dreadful during the restart."
+		}, {
+			"sentence": "The conflict in Tom's puzzled heart sharpened that evening into dreadful edges that cut him mercilessly whichever way he turned.",
+			"profanity": 0,
+			"source": {
+				"title": "The Wave",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/33876/33876-h/33876-h.htm",
+				"author": "Algernon Blackwood",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "CHcqLncBoaa-DHVhCdcT"
+		}, {
+			"sentence": "He could not bear to open his dreadful situation to his Uncle David, nor to kill himself, nor to defy the vengeance of Longcluse.",
+			"profanity": 0,
+			"source": {
+				"title": "Checkmate",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/38460/38460-h/38460-h.htm",
+				"author": "Joseph Sheridan Le Fanu",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "wXcqLncBoaa-DHVhCdgU"
+		}, {
+			"sentence": "At other times they have a dreadful look of being fibs invented for the purpose of covering a fault.",
+			"profanity": 0,
+			"source": {
+				"title": "Children's Ways",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/37020/37020-h/37020-h.htm",
+				"author": "James Sully",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "1ncqLncBoaa-DHVhCdgU"
+		}, {
+			"sentence": "Nevertheless, this world of mankind to-day seems to me to be a very sinister and dreadful world.",
+			"profanity": 0,
+			"source": {
+				"title": "The Salvaging Of Civilisation",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/33889/33889-h/33889-h.htm",
+				"author": "H. G. (Herbert George) Wells",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "BncqLncBoaa-DHVhCdsU"
+		}, {
+			"sentence": "She had wakened up in the night, and perceived with dreadful clearness that trouble lay in front of her.",
+			"profanity": 0,
+			"source": {
+				"title": "Hilda Lessways",
+				"type": "const",
+				"url": "http://www.gutenberg.org/files/10658/10658-h/10658-h.htm",
+				"author": "Arnold Bennett",
+				"publication_date": null,
+				"abbreviation": "gbg"
+			},
+			"id": "bHcqLncBoaa-DHVhCdsU"
+		}],
+		"slugLuna": "dreadful",
+		"supplementaryContent": null
+	}
+}

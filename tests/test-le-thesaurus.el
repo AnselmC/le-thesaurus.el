@@ -33,32 +33,44 @@
 (require 'le-thesaurus)
 (require 'benchmark)
 
-(describe "le-thesaurus correctly extracts synonyms from parsed JSON response."
+(describe "le-thesaurus correctly extracts data from parsed JSON response."
           (it "Returns an empty list when the payload has no 'data key empty"
               (let ((payload '()))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-be '())))
+                (dolist (type '(antonyms synonyms))
+                  (expect (le-thesaurus--parse-data-in-response payload type) :to-be '()))))
           (it "Returns an empty list when the payload's 'data value has no 'defintionData key"
               (let ((payload '((data . ()))))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-be '())))
+                (dolist (type '(antonyms synonyms))
+                  (expect (le-thesaurus--parse-data-in-response payload type) :to-be '()))))
           (it "Returns an empty list when the payload's 'definitionData has no 'definitions key"
               (let ((payload '((data . ((definitionData . ()))))))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-be '())))
+                (dolist (type '(antonyms synonyms))
+                  (expect (le-thesaurus--parse-data-in-response payload type) :to-be '()))))
           (it "Returns an empty list when the `definitions list is empty"
               (let ((payload '((data . ((definitionData . ((definitions . ()))))))))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-be '())))
-          (it "Returns the synonyms on simple payload"
+                (dolist (type '(antonyms synonyms))
+                  (expect (le-thesaurus--parse-data-in-response payload type) :to-be '()))))
+          (it "Returns the synonyms and antonyms on simple payload"
               (let ((payload '((data .
                                      ((definitionData .
                                         ((definitions .
-                                           (((synonyms .
+                                           ((
+                                             (synonyms .
                                                        (((term . "hello") (similarity . "100") (isVulgar . "0") (isInformal . "0"))
-                                                        ((term . "world") (similarity . "42") (isVulgar . "100") (isInformal . "100"))))))))))))))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-equal
+                                                        ((term . "world") (similarity . "42") (isVulgar . "100") (isInformal . "100"))))
+                                             (antonyms .
+                                                       (((term . "bye") (similarity . "10") (isVulgar . "0") (isInformal . "0"))
+                                                        ((term . "girl") (similarity . "24") (isVulgar . "100") (isInformal . "100"))))))))))))))
+                (expect (le-thesaurus--parse-data-in-response payload 'synonyms) :to-equal
                         '(((similarity . "100") (vulgar) (informal) (definition) (term . "hello"))
-                          ((similarity . "42") (vulgar . t) (informal . t) (definition) (term . "world"))))))
+                          ((similarity . "42") (vulgar . t) (informal . t) (definition) (term . "world"))))
+                (expect (le-thesaurus--parse-data-in-response payload 'antonyms) :to-equal
+                        '(((similarity . "10") (vulgar) (informal) (definition) (term . "bye"))
+                          ((similarity . "24") (vulgar . t) (informal . t) (definition) (term . "girl"))))
+                ))
           (it "Returns the synonyms from full example json payload"
-              (let ((payload (json-read-file "tests/data/test-response.json")))
-                (expect (le-thesaurus--parse-synonyms-in-response payload) :to-equal
+              (let ((payload (json-read-file "tests/data/test-response-synonyms.json")))
+                (expect (le-thesaurus--parse-data-in-response payload 'synonyms) :to-equal
                         '(((similarity . "100") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "reference book"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "glossary"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "lexicon"))
@@ -69,13 +81,19 @@
                           ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "sourcebook"))
                           ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "storehouse of words"))
                           ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "treasury of words"))
-                          ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "word list")))))))
+                          ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "word list"))))))
+          (it "Returns the antonmys from full example json payload"
+              (let ((payload (json-read-file "tests/data/test-response-antonyms.json")))
+                (expect (le-thesaurus--parse-data-in-response payload 'antonyms) :to-equal
+                        '(((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "advantageous"))
+                          ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "beautiful"))
+                          ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "comforting")))))))
 
 (describe "le-thesaurus correctly works with thesaurus.com."
           (it "Returns the expected list of synonyms for 'thesaurus'"
-              (defvar auto-revert-notify-watch-descriptor-hash-list nil);; there's a bug in request it seem s.t. I need to define this var
+              (defvar auto-revert-notify-watch-descriptor-hash-list nil);; there's a bug in request it seems s.t. I need to define this var
               (let ((word "thesaurus"))
-                (expect (le-thesaurus--ask-thesaurus-for-synonyms word) :to-equal
+                (expect (le-thesaurus--ask-thesaurus-for-word word 'synonyms) :to-equal
                         '(((similarity . "100") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "reference book"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "glossary"))
                           ((similarity . "50") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "lexicon"))
@@ -89,12 +107,12 @@
                           ((similarity . "10") (vulgar) (informal) (definition . "dictionary of synonyms and antonyms") (term . "word list"))))))
           (it "Sets the cache when a word is requested"
               (let* ((word "dictionary")
-                     (synonyms (le-thesaurus--ask-thesaurus-for-synonyms word)))
-                (expect (gethash word le-thesaurus--cache) :to-be synonyms)))
+                     (synonyms (le-thesaurus--ask-thesaurus-for-word word 'synonyms)))
+                (expect (le-thesaurus--parse-data-in-response (gethash word le-thesaurus--cache) 'synonyms) :to-equal synonyms)))
           (it "Uses the cache when the same word is requested twice"
               (let* ((word "ball")
-                     (first-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-synonyms word)))
-                     (second-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-synonyms word))))
+                     (first-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-word word 'synonyms)))
+                     (second-run-secs (benchmark-elapse (le-thesaurus--ask-thesaurus-for-word word 'synonyms))))
                 ;; using factor of 5 to make sure that performance increase isn't random variation in network response time
                 (expect first-run-secs :to-be-greater-than (* 5 second-run-secs)))))
 

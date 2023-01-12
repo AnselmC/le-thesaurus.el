@@ -2,7 +2,7 @@
 [![MELPA](https://melpa.org/packages/le-thesaurus-badge.svg)](https://melpa.org/#/le-thesaurus)
 [![Coverage Status](https://coveralls.io/repos/github/AnselmC/le-thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/le-thesaurus.el?branch=master)
 
-Emacs package for querying synonyms from [Thesaurus.com](thesaurus.com).
+Emacs package for querying synonyms and antonyms from [Thesaurus.com](thesaurus.com).
 
 <p align="center">
     <img src="thesaurus-example.gif"/>
@@ -17,10 +17,10 @@ Install it via [use-package](https://github.com/jwiegley/use-package) or [straig
 ```
 
 ## Usage
-Put your cursor on the word you'd like a synonym for and run `M-x le-thesaurus-get-synonyms`.
+Put your cursor on the word you'd like a synonym for and run `M-x le-thesaurus-get-{synonyms,antonyms}`.
 Pick a synonym from the completion buffer and hit `RET`.
 
-Responses from thesaurus.com are cached. 
+Responses from `thesaurus.com` are cached. 
 You can clear the cache with `le-thesaurus-clear-cache` if it should get too large.
 
 That's it.
