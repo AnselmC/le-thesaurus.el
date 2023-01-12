@@ -113,7 +113,7 @@ Words are sorted by similarity."
   "Get fun initialized with COMPLETIONS for collection arg to `completing-read'."
   (lambda (str pred flag)
     (cl-case flag
-      ('metadata
+      (metadata
        `(metadata
          (annotation-function . ,(le-thesaurus--get-annotations completions))
          (group-function . ,(le-thesaurus--get-group completions))
