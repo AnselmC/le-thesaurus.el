@@ -1,3 +1,6 @@
+# DEPRECATED (Dec 29th 2024)
+This package no longer works as the endpoint being used is not returning any data. Unfortunately, no free thesaurus API alternatives exist.
+
 # le-thesaurus.el
 [![MELPA](https://melpa.org/packages/le-thesaurus-badge.svg)](https://melpa.org/#/le-thesaurus)
 [![Coverage Status](https://coveralls.io/repos/github/AnselmC/le-thesaurus.el/badge.svg?branch=master)](https://coveralls.io/github/AnselmC/le-thesaurus.el?branch=master)

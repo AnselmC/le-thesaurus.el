@@ -149,23 +149,28 @@ Words are sorted by similarity."
 		                  (t replace-text)))))
       (message (format "No %s for %S!" type word)))))
 
+(defconst le-thesaurus--deprecation-warning
+  "Warning: As of 2024-12-29 le-thesaurus.el is deprecated as thesaurus.com no longer provides publicly available data.")
 
 ;;;###autoload
 (defun le-thesaurus-get-synonyms ()
   "Interactively get synonyms for symbol at active region or point."
   (interactive)
+  (warn le-thesaurus--deprecation-warning)
   (le-thesaurus--completing-read 'synonyms))
 
 ;;;###autoload
 (defun le-thesaurus-get-antonyms()
   "Interactively get antonyms for symbol at active region or point."
   (interactive)
+  (warn le-thesaurus--deprecation-warning)
   (le-thesaurus--completing-read 'antonyms))
 
 ;;;###autoload
 (defun le-thesaurus-clear-cache ()
   "Clear the cache for le-thesaurus."
   (interactive)
+  (warn le-thesaurus--deprecation-warning)
   (clrhash le-thesaurus--cache))
 
 (provide 'le-thesaurus)
