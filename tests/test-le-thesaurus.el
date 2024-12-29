@@ -89,7 +89,7 @@
                           ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "beautiful"))
                           ((similarity . "-100") (vulgar) (informal) (definition . "horrible, frightening") (term . "comforting")))))))
 
-(describe "le-thesaurus correctly works with thesaurus.com."
+(xdescribe "le-thesaurus correctly works with thesaurus.com."
           (it "Returns the expected list of synonyms for 'thesaurus'"
               (defvar auto-revert-notify-watch-descriptor-hash-list nil);; there's a bug in request it seems s.t. I need to define this var
               (let ((word "thesaurus"))
